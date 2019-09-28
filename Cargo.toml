@@ -1,0 +1,11 @@
+[package]
+name = "RUST"
+version = "0.1.0"
+authors = ["Raj-kishore <raj.maharana.94@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lmdb-zero = "0.4.4"
+tempdir = "0.3.7"

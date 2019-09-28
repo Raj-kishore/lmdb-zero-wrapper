@@ -1,0 +1,29 @@
+For your employment test, you'll be adding a feature to a crate named LMDB ZERO.
+https://github.com/AltSysrq/lmdb-zero
+
+Your task will be to add a feature to be able to make queries to a database. LMDB zero doesn't not support queries, your goal is to add it.
+We should be able to pass a STRING query, as this is an employment test, i'll just make it 3 features, INSERT, UPDATE and DEL
+
+
+    QUERY_INSERT = "INSERT IN database_name KEY = XXXXXX | VALUE = xxxxxx";
+    QUERY_UPDATE = "UPDATE database_name KEY = XXXXXX | NEW_VALUE = xxxxxx";
+    QUERY_DELETE = "DELETE FROM database_name KEY = XXXXXX ";
+
+    Those should be STRINGS.
+
+We must be able to do it from anywhere in the program without passing the lmdb context, insert tests too.
+
+--------
+
+Goal is to create clone the crate and create a wrapper such that the new crate name would be "lmdb-zero-sql", 
+implement the above three methods there in tx rs. Such that they can access the database without the lmdb context ... by db name and key value pair ...
+i.e there should be sql layer over the lmdb zero such that the end user treat the code as sql not a b tree key val pairs. 
+
+1. Run entire code in local with the above 3 functionalities. [Ongoing]
+2. Create own crate and use in local 
+3. migrate lmdb zero crate to my crate and update the above 3 functionalities there. 
+4. Test in local .
+5. Submit 
+
+
+
