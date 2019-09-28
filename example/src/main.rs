@@ -125,4 +125,3 @@ fn main() {
   let QUERY_DELETE = "DELETE FROM database_name KEY = XXXXXX ";
   custom_query(QUERY_INSERT, path);
 }
-
