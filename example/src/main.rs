@@ -61,9 +61,7 @@ fn custom_query(query: &str, path: &str) {
             // Now let's read the data back
             let txn = lmdb::ReadTransaction::new(&env).unwrap();
             let access = txn.access();
-            // Get the capital of Latvia. Note that the string is *not* copied; the
-            // reference actually points into the database memory, and is valid
-            // until the transaction is dropped or the accessor is mutated.
+
             let capital_of_latvia: &str = access.get(&db, key).unwrap();
             let new_val = "";
             assert_eq!([value, new_val].concat(), capital_of_latvia);
