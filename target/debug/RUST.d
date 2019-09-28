@@ -1,1 +1,1 @@
-/home/rajkishor/Desktop/RUST/target/debug/RUST: /home/rajkishor/Desktop/RUST/src/main.rs
+/home/rajkishor/Desktop/RUST2/lmdb-zero-wrapper/target/debug/RUST: /home/rajkishor/Desktop/RUST2/lmdb-zero-wrapper/src/main.rs

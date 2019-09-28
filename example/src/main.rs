@@ -62,9 +62,9 @@ fn custom_query(query: &str, path: &str) {
             let txn = lmdb::ReadTransaction::new(&env).unwrap();
             let access = txn.access();
 
-            let capital_of_latvia: &str = access.get(&db, key).unwrap();
+            let get_val: &str = access.get(&db, key).unwrap();
             let new_val = "";
-            assert_eq!([value, new_val].concat(), capital_of_latvia);
+            assert_eq!(value, get_val);
             println!("Key Vaule pair has inserted.");
           }
         } else {
@@ -118,8 +118,10 @@ fn custom_query(query: &str, path: &str) {
 
 fn main() {
   let path = "/home/rajkishor/Desktop/RUST/DB";
-  let QUERY_INSERT = "INSERT IN popa KEY = GOAL | VALUE = FINISH";
-  let QUERY_UPDATE = "UPDATE database_name KEY = XXXXXX | NEW_VALUE = xxxxxx";
-  let QUERY_DELETE = "DELETE FROM database_name KEY = XXXXXX ";
-  custom_query(QUERY_INSERT, path);
+  let QUERY_INSERT1 = "INSERT IN popa KEY = Patrick | VALUE = engineer";
+  let QUERY_INSERT2 = "Insert In popa KEY = Daniel | VALUE = doctor";
+  let QUERY_INSERT3 = "insert IN popa KEY = Raj | VALUE = nurse";
+  custom_query(QUERY_INSERT1, path);
+custom_query(QUERY_INSERT2, path);
+  custom_query(QUERY_INSERT3, path);
 }

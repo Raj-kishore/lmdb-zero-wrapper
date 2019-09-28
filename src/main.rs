@@ -1,7 +1,8 @@
 extern crate lmdb_zero as lmdb;
 extern crate tempdir;
 
-fn custom_query(query: &str, path: &str) {
+pub fn custom_query(query: &str, path: &str) -> bool {
+  let mut q_status = false;
   let query_arr: Vec<_> = query.split(' ').collect();
 
   let mut env_builder = lmdb::EnvBuilder::new().unwrap();
@@ -12,7 +13,6 @@ fn custom_query(query: &str, path: &str) {
       .unwrap()
   };
 
-  // Open the database with name db_name
   let db = lmdb::Database::open(
     &env,
     Some("example-db"),
@@ -56,17 +56,14 @@ fn custom_query(query: &str, path: &str) {
             // Commit the changes so they are visible to later transactions
             txn.commit().unwrap();
           }
-
-          {
-            // Now let's read the data back
             let txn = lmdb::ReadTransaction::new(&env).unwrap();
             let access = txn.access();
-            // Get the capital of Latvia. Note that the string is *not* copied; the
-            // reference actually points into the database memory, and is valid
-            // until the transaction is dropped or the accessor is mutated.
-            let capital_of_latvia: &str = access.get(&db, key).unwrap();
-            let new_val = "";
-            assert_eq!([value, new_val].concat(), capital_of_latvia);
+
+            let get_val: &str = access.get(&db, key).unwrap();
+            if(value == get_val){
+              q_status = true; 
+            }
+          {
             println!("Key Vaule pair has inserted.");
           }
         } else {
@@ -116,13 +113,33 @@ fn custom_query(query: &str, path: &str) {
       _ => println!("Syntax Error at Column 1"),
     }
   }
+  q_status
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;  
+    #[test]
+    fn is_query_working() {
+        
+        assert_eq!(true, custom_query(DB_PARAMS.query, DB_PARAMS.path));
+
+    }
 }
 
 fn main() {
-  let path = "/home/rajkishor/Desktop/RUST/DB";
-  let QUERY_INSERT = "INSERT IN popa KEY = GOAL | VALUE = FINISH";
-  let QUERY_UPDATE = "UPDATE database_name KEY = XXXXXX | NEW_VALUE = xxxxxx";
-  let QUERY_DELETE = "DELETE FROM database_name KEY = XXXXXX ";
+  let path = DB_PARAMS.path;
+  let QUERY_INSERT = DB_PARAMS.query;
+  // let QUERY_UPDATE = "UPDATE database_name KEY = XXXXXX | NEW_VALUE = xxxxxx";
+  // let QUERY_DELETE = "DELETE FROM database_name KEY = XXXXXX ";
   custom_query(QUERY_INSERT, path);
+}
+static DB_PARAMS: QueryStruct = QueryStruct  {
+    path:   "/home/rajkishor/Desktop/RUST/DB",
+    query:  "INSERT IN popa KEY = GOAL | VALUE = FINISH",
+};
+struct QueryStruct {
+    path: &'static str,
+    query: &'static str,
 }
 
